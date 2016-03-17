@@ -23,8 +23,8 @@ def parse(name):
 		for title, author in zip(top_title, top_author):
 			# итерируем по двум спискам одновременно
 			f.write(u'%s - %s\n' % (' '.join(author.strip('\n').split()).text,
-									title.strip('\n')).text)
+                           title.strip('\n')).text)
 
 if __name__ == '__main__':
-	for name in urls.keys():
-		parse(name)
+    for name in urls.keys():
+        parse(name)
