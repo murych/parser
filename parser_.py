@@ -8,7 +8,7 @@ def write_file(name, url, top_title):
         with codecs.open('%s.txt' % name, 'w', encoding='utf-8') as f:
             f.write(u'%s\n%s\n\n' % (name, url))
             for title in top_title:
-                f.write('%s\n' % (title.strip('\n')))
+                f.write('%s\n' % title)
 
 
 class Site():
@@ -26,7 +26,7 @@ class Site():
         container = soup.find(self.container_tag, attrs=self.container_attrs)
         top_title = container.find_all(self.title_tag, self.title_attrs)
         top_title = list(map(lambda title: title.text, top_title))
-        return self.name, self.url, top_title
+        return top_title
 
 
 class LiveLib(Site):
@@ -36,13 +36,6 @@ class LiveLib(Site):
         self.container_tag, self.container_attrs = 'table', {'class': 'linear-list'}
 
 
-class Readly(Site):
-    def __init__(self, url):
-        Site.__init__(self.url)
-        self.title_tag, self.title_attrs = 'h3', {'class': 'blvi__title'}
-        self.container_tag, self.container_attrs = 'table', {'class': 'book-list-view'}
-
-
 class ReadRate(Site):
     def __init__(self, url):
         Site.__init__(self, url)
@@ -50,5 +43,7 @@ class ReadRate(Site):
         self.container_tag, self.container_attrs = 'div', {'class': 'books-list'}
 
 livelib = LiveLib('http://www.livelib.ru/books/top')
-#readly = Readly('http://readly.ru/books/top/')
 readrate = ReadRate('http://readrate.com/rus/ratings/top100')
+
+write_file(livelib.name, livelib.url, livelib.get_top())
+write_file(readrate.name, readrate.url, readrate.get_top())
