@@ -63,3 +63,6 @@ target/
 
 # Ignore parser results
 *.txt
+
+#Ignore Pycharm
+.idea/
