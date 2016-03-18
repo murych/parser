@@ -8,7 +8,7 @@ def write_file(name, url, top_title):
         with codecs.open('%s.txt' % name, 'w', encoding='utf-8') as f:
             f.write(u'%s\n%s\n\n' % (name, url))
             for title in top_title:
-                f.write('%s\n' % title)
+                f.write('%s\n' % title.strip('\n'))
 
 
 class Site():
@@ -42,8 +42,17 @@ class ReadRate(Site):
         self.title_tag, self.title_attrs = 'div', {'class': 'title'}
         self.container_tag, self.container_attrs = 'div', {'class': 'books-list'}
 
+
+class Readly(Site):
+    def __init__(self, url):
+        Site.__init__(self, url)
+        self.title_tag, self.title_attrs = 'h3', {'class': 'blvi__title'}
+        self.container_tag, self.container_attrs = 'div', {'class': 'book-list-view'}
+
 livelib = LiveLib('http://www.livelib.ru/books/top')
 readrate = ReadRate('http://readrate.com/rus/ratings/top100')
+readly = Readly('http://readly.ru/books/top')
 
 write_file(livelib.name, livelib.url, livelib.get_top())
 write_file(readrate.name, readrate.url, readrate.get_top())
+write_file(readly.name, readly.url, readly.get_top())
