@@ -1,6 +1,6 @@
-import re
 import codecs
 import requests
+from re import match
 from bs4 import BeautifulSoup
 
 
@@ -14,7 +14,7 @@ def write_file(name, url, top_title):
 class Site():
     def __init__(self, url):
         self.url = url
-        self.name = re.match('^(?:http?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)', url).group(1)
+        self.name = match('^(?:http?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)', url).group(1)
 
     def parse(self):
         r = requests.get(self.url)
