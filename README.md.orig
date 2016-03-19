@@ -11,7 +11,11 @@
 
 ## Возможности
 
+<<<<<<< HEAD
+- [X] Получение списка топ-100 книг с сайтов:
+=======
 - [X] Получение списка топ-100 книг и авторов с сайтов:
+>>>>>>> functional
   - [X] [LiveLib](http://www.livelib.ru/books/top)
   - [X] [ReadRate](http://readrate.com/rus/ratings/top100)
   - [X] [Readly](http://readly.ru/books/top)
