@@ -3,7 +3,7 @@ from params_ import *
 
 
 def write_file(name, url, top_title):
-		with codecs.open('%s.txt' % name, 'w', encoding='utf-8') as f:
+		with codecs.open('output/%s.txt' % name, 'w', encoding='utf-8') as f:
 			f.write(u'%s\n%s\n\n' % (name, url))
 			for title in top_title:
 				f.write('%s\n' % title.strip('\n'))
