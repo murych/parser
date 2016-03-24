@@ -23,20 +23,42 @@ class Site():
 class LiveLib(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag, self.title_attrs = 'a', {'class': "tag-book-title"}
-		self.authors_tag, self.authors_attrs = 'a', {'class': 'tag-book-author'}
-		self.container_tag, self.container_attrs = 'table', {'class': "linear-list"}
+		self.title_tag = 'a'
+		self.title_attrs = {'class': "tag-book-title"}
+		self.container_tag = 'table'
+		self.container_attrs = {'class': "linear-list"}
+		self.authors_tag = 'a'
+		self.authors_attrs = {'class': 'tag-book-author'}
 
 class ReadRate(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag, self.title_attrs= 'div', {'class': "title"}
-		self.authors_tag, self.authors_attrs = 'li', {'class': 'contributor item'}
-		self.container_tag, self.container_attrs = 'div', {'class': "books-list"}
+		self.title_tag= 'div'
+		self.title_attrs = {'class': "title"}
+		self.container_tag = 'div'
+		self.container_attrs = {'class': "books-list"}
+		self.authors_tag = 'li'
+		self.authors_attrs = {'class': 'contributor item'}
 
 class Libs(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag, self.title_attrs = 'h2', {}
-		self.authors_tag, self.authors_attrs = 'a', {'class': re.compile('/a/')}
-		self.container_tag, self.container_attrs = 'div', {'class': "posts doocode_book_result_filter"}
+		self.title_tag = 'h2'
+		self.title_attrs = {}
+		self.container_tag = 'div'
+		self.container_attrs = {'class': "posts doocode_book_result_filter"}
+		self.authors_tag = 'div'
+		self.authors_attrs = {'class': 'uk-width-10-10 uk-width-medium-5-10  uk-width-large-5-10'}
+
+	def get_top(self):
+		top_titles, top_authors = Site.get_top(self)
+		# Нет определленого у тега с авторами нет определенного класса
+		# Используется другой способ поиска
+		top_libs_authors = []
+		for i in top_authors:
+			author = i.find('a')
+			if author != None:
+				top_libs_authors.append(author)
+		# (Костыль) У книги на 25 месте нету автора
+		top_libs_authors.insert(24,"Неизвестный автор")
+		return top_titles, top_libs_authors
