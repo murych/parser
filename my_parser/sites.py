@@ -2,12 +2,13 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
+
 class Site():
 	def __init__(self, url):
 		self.url = url
 		# Из полного адреса выбираем имя.домен
 		self.name = re.findall('(\w+\.\w+)\/', url)[0]
-	
+
 	def parse(self):
 		r = requests.get(self.url)
 		r.encoding = 'utf-8'
@@ -20,6 +21,7 @@ class Site():
 		top_authors = container.find_all(self.authors_tag, attrs=self.authors_attrs)
 		return top_titles, top_authors
 
+
 class LiveLib(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
@@ -30,15 +32,17 @@ class LiveLib(Site):
 		self.authors_tag = 'a'
 		self.authors_attrs = {'class': 'tag-book-author'}
 
+
 class ReadRate(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag= 'div'
+		self.title_tag = 'div'
 		self.title_attrs = {'class': "title"}
 		self.container_tag = 'div'
 		self.container_attrs = {'class': "books-list"}
 		self.authors_tag = 'li'
 		self.authors_attrs = {'class': 'contributor item'}
+
 
 class Libs(Site):
 	def __init__(self, url):
@@ -57,8 +61,11 @@ class Libs(Site):
 		top_libs_authors = []
 		for i in top_authors:
 			author = i.find('a')
-			if author != None:
+			if author is not None:
 				top_libs_authors.append(author)
+			#else:
+				#top_libs_authors.append('Неизвестный автор')
 		# (Костыль) У книги на 25 месте нету автора
-		top_libs_authors.insert(24,"Неизвестный автор")
+		top_libs_authors.insert(26, 'error')
 		return top_titles, top_libs_authors
+		
