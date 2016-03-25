@@ -6,7 +6,6 @@ def save_file(topsites):
 	with open("out.txt", "w", encoding="utf-8") as f:
 		for site in topsites:
 			f.write(u'\nТоп 100 книг по версии сайта %s:\n\n' % (site.name))
-			# top_titles, top_authors = site.get_top()
 			top = site.get_top()
 			for i in range(len(top[0])):
 				try:

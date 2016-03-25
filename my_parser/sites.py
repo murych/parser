@@ -25,34 +25,25 @@ class Site():
 class LiveLib(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag = 'a'
-		self.title_attrs = {'class': "tag-book-title"}
-		self.container_tag = 'table'
-		self.container_attrs = {'class': "linear-list"}
-		self.authors_tag = 'a'
-		self.authors_attrs = {'class': 'tag-book-author'}
+		self.title_tag, self.title_attrs = 'a', {'class': "tag-book-title"}
+		self.container_tag, self.container_attrs = 'table', {'class': "linear-list"}
+		self.authors_tag, self.authors_attrs = 'a', {'class': 'tag-book-author'}
 
 
 class ReadRate(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag = 'div'
-		self.title_attrs = {'class': "title"}
-		self.container_tag = 'div'
-		self.container_attrs = {'class': "books-list"}
-		self.authors_tag = 'li'
-		self.authors_attrs = {'class': 'contributor item'}
+		self.title_tag, self.title_attrs = 'div', {'class': "title"}
+		self.container_tag, self.container_attrs = 'div', {'class': "books-list"}
+		self.authors_tag, self.authors_attrs = 'li', {'class': 'contributor item'}
 
 
 class Libs(Site):
 	def __init__(self, url):
 		Site.__init__(self, url)
-		self.title_tag = 'h2'
-		self.title_attrs = {}
-		self.container_tag = 'div'
-		self.container_attrs = {'class': "posts doocode_book_result_filter"}
-		self.authors_tag = 'div'
-		self.authors_attrs = {'class': 'uk-width-10-10 uk-width-medium-5-10  uk-width-large-5-10'}
+		self.title_tag, self.title_attrs = 'h2', {}
+		self.container_tag, self.container_attrs = 'div', {'class': "posts doocode_book_result_filter"}
+		self.authors_tag, self.authors_attrs = 'div', {'class': 'uk-width-10-10 uk-width-medium-5-10  uk-width-large-5-10'}
 
 	def get_top(self):
 		top_titles, top_authors = Site.get_top(self)
@@ -63,9 +54,6 @@ class Libs(Site):
 			author = i.find('a')
 			if author is not None:
 				top_libs_authors.append(author)
-			#else:
-				#top_libs_authors.append('Неизвестный автор')
-		# (Костыль) У книги на 25 месте нету автора
 		top_libs_authors.insert(26, 'error')
 		return top_titles, top_libs_authors
 		
