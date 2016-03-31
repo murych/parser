@@ -1,17 +1,20 @@
-import codecs
+# -*- coding: utf-8 -*-
 from params_ import *
 
 
-def write_file(name, url, top_title):
-		with codecs.open('output/%s.txt' % name, 'w', encoding='utf-8') as f:
-			f.write(u'%s\n%s\n\n' % (name, url))
-			for title in top_title:
-				f.write('%s\n' % title.strip('\n'))
+def save_file(topsites):
+    with open("out.txt", "w", encoding="utf-8") as f:
+        for site in topsites:
+            f.write(u'\nТоп 100 книг по версии сайта %s:\n\n' % (site.name))
+            top = site.get_top()
+            for i in range(len(top[0])):
+                try:
+                    f.write(u'%d) %s - %s\n' % (i + 1, top[0][i].text, top[1][i].text))
+                except AttributeError:
+                    f.write(u'%d) %s - Неизвестный автор\n' % (i + 1,top[0][i].text))
 
 livelib = LiveLib('http://www.livelib.ru/books/top')
 readrate = ReadRate('http://readrate.com/rus/ratings/top100')
-readly = Readly('http://readly.ru/books/top')
+libs = Libs('http://libs.ru/best-100')
 
-write_file(livelib.name, livelib.url, livelib.get_top())
-write_file(readrate.name, readrate.url, readrate.get_top())
-write_file(readly.name, readly.url, readly.get_top())
+save_file([livelib, readrate, libs])
